@@ -78,13 +78,14 @@ export const Layout = (props) => {
             >
               Welcome to{" "}
               <Box component="a" sx={{ color: "#15B79E" }} target="_blank">
-                Devias Kit
+                SGHEDA
               </Box>
             </Typography>
             <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-              A professional kit that comes with ready-to-use MUI components.
+              This page serves as a centralized platform for sales administrator <br />
+              to manage and track sales-related activities.
             </Typography>
-            <img alt="" src="/assets/auth-illustration.svg" />
+            <img alt="" src="/assets/designbackground.png" />
           </Box>
         </Grid>
       </Grid>

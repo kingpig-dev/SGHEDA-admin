@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
-  Alert,
   Box,
   Button,
   FormHelperText,
@@ -21,13 +20,14 @@ import { Layout as AuthLayout } from "src/layouts/auth/layout";
 import Alert from "./../../components/alert";
 
 const Page = () => {
+  const [alert, setAlert] = useState({ message: "", successful: true, open: false });
   const router = useRouter();
   const auth = useAuth();
   const [method, setMethod] = useState("email");
   const formik = useFormik({
     initialValues: {
       email: "demo@devias.io",
-      password: "Password123!",
+      password: "P@ssw0rd123",
       submit: null,
     },
     validationSchema: Yup.object({
@@ -35,16 +35,22 @@ const Page = () => {
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
-      try {
-        await auth.signIn(values.email, values.password).then(() => {
-          setAlert;
-        });
-        router.push("/");
-      } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-      }
+      await auth.signIn(values.email, values.password).then(
+        () => {
+          setAlert({ message: "Login Successfully", successful: true, open: true });
+          router.push("/");
+        },
+        (error) => {
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: error.message });
+          helpers.setSubmitting(false);
+          const resMessage =
+            (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setAlert({ message: resMessage, successful: false, open: true });
+        }
+      );
     },
   });
 
@@ -60,8 +66,16 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Login | Devias Kit</title>
+        <title>Login | SGHEDA Admin Page</title>
       </Head>
+      <Alert
+        message={alert.message}
+        successful={alert.successful}
+        open={alert.open}
+        handleClose={() => {
+          setAlert({ ...alert, open: false });
+        }}
+      />
       <Box
         sx={{
           backgroundColor: "background.paper",
@@ -83,20 +97,11 @@ const Page = () => {
             <Stack spacing={1} sx={{ mb: 3 }}>
               <Typography variant="h4">Login</Typography>
               <Typography color="text.secondary" variant="body2">
-                Don&apos;t have an account? &nbsp;
-                <Link
-                  component={NextLink}
-                  href="/auth/register"
-                  underline="hover"
-                  variant="subtitle2"
-                >
-                  Register
-                </Link>
+                Only website administrators can signin!!! &nbsp;
               </Typography>
             </Stack>
             <Tabs onChange={handleMethodChange} sx={{ mb: 3 }} value={method}>
               <Tab label="Email" value="email" />
-              <Tab label="Phone Number" value="phoneNumber" />
             </Tabs>
             {method === "email" && (
               <form noValidate onSubmit={formik.handleSubmit}>
@@ -143,7 +148,7 @@ const Page = () => {
                 </Alert>
               </form>
             )}
-            {method === "phoneNumber" && (
+            {/* {method === "phoneNumber" && (
               <div>
                 <Typography sx={{ mb: 1 }} variant="h6">
                   Not available in the demo
@@ -152,7 +157,7 @@ const Page = () => {
                   To prevent unnecessary costs we disabled this feature in the demo.
                 </Typography>
               </div>
-            )}
+            )} */}
           </div>
         </Box>
       </Box>
