@@ -6,15 +6,34 @@ import UserIcon from "@heroicons/react/24/solid/UserIcon";
 import UserPlusIcon from "@heroicons/react/24/solid/UserPlusIcon";
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
 import XCircleIcon from "@heroicons/react/24/solid/XCircleIcon";
+import FeedbackIcon from "@heroicons/react/24/solid/ClipboardDocumentListIcon";
 import { SvgIcon } from "@mui/material";
 
 export const items = [
   {
-    title: "Overview",
+    title: "Dashboard",
     path: "/",
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />
+      </SvgIcon>
+    ),
+  },
+  {
+    title: "Licensce",
+    path: "/licensce",
+    icon: (
+      <SvgIcon fontSize="small">
+        <ShoppingBagIcon />
+      </SvgIcon>
+    ),
+  },
+  {
+    title: "Feedback",
+    path: "/feedback",
+    icon: (
+      <SvgIcon fontSize="small">
+        <FeedbackIcon />
       </SvgIcon>
     ),
   },
