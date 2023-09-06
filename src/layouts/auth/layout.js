@@ -82,7 +82,7 @@ export const Layout = (props) => {
               </Box>
             </Typography>
             <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-              This page serves as a centralized platform for sales administrator <br />
+              This page serves as a centralized platform for website administrator <br />
               to manage and track sales-related activities.
             </Typography>
             <img alt="" src="/assets/designbackground.png" />
